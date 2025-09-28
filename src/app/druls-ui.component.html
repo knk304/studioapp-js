@@ -4,6 +4,10 @@
       <h1 class="druls-header">Druls UI Editor</h1>
       <input type="file" (change)="onFileChange($event)" accept=".xlsx,.xls" />
       <div *ngIf="excelData.length" class="excel-table-container">
+        <div style="text-align:right; margin-bottom:12px;">
+          <button class="excel-edit-btn" *ngIf="!editMode" (click)="setEditMode(true)">Edit</button>
+          <button class="excel-save-btn" *ngIf="editMode" (click)="saveEditMode()">Save</button>
+        </div>
         <table class="excel-table">
           <thead>
             <tr>
@@ -13,8 +17,13 @@
           <tbody>
             <tr *ngFor="let row of excelData.slice(1); let rowIdx = index; trackBy: trackByRow">
               <td *ngFor="let cell of row; let colIdx = index; trackBy: trackByCol">
-                <textarea [(ngModel)]="excelData[rowIdx + 1][colIdx]"
-                  class="excel-cell-textarea" rows="2" [ngModelOptions]="{standalone: true}" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+                <ng-container *ngIf="editMode; else showCell">
+                  <textarea [(ngModel)]="excelData[rowIdx + 1][colIdx]"
+                    class="excel-cell-textarea" rows="2" [ngModelOptions]="{standalone: true}" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+                </ng-container>
+                <ng-template #showCell>
+                  <span>{{ cell }}</span>
+                </ng-template>
               </td>
             </tr>
           </tbody>

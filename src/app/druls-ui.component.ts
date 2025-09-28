@@ -13,9 +13,18 @@ import { CommonModule } from '@angular/common';
 export class DrulsUiComponent {
   excelData: string[][] = [];
   fileName = '';
+  editMode = false;
 
   trackByRow = (index: number, row: any) => index;
   trackByCol = (index: number, cell: any) => index;
+
+  setEditMode(val: boolean) {
+    this.editMode = val;
+  }
+
+  saveEditMode() {
+    this.editMode = false;
+  }
 
   onFileChange(event: any) {
     const target: DataTransfer = <DataTransfer>(event.target);
