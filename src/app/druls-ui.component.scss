@@ -29,46 +29,44 @@ input[type="file"]:focus {
 
 // Excel table container
 .excel-table-container {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-    padding: 32px 24px;
-    width: auto;
-    overflow-x: scroll;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 32px 24px;
+  width: auto;
+  overflow-x: auto;
 }
 
 .excel-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 24px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
 }
 
-.excel-table th,
-.excel-table td {
-    border: 1px solid #b0b0b0;
-    padding: 8px;
-    text-align: left;
-    background: #f8fafd;
+.excel-table th, .excel-table td {
+  border: 1px solid #b0b0b0;
+  padding: 8px;
+  text-align: left;
+  background: #f8fafd;
 }
 
 .excel-table th {
-    background: #e3f2fd;
-    font-weight: 600;
+  background: #e3f2fd;
+  font-weight: 600;
 }
 
 .excel-cell-textarea {
-    width: 100%;
-    min-width: 100px;
-    max-width: 100%;
-    box-sizing: border-box;
-    min-height: 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border: 1px solid #b0b0b0;
-    padding: 6px;
-    font-size: 1rem;
-    background: #f8fafd;
-    resize: vertical;
+  width: 100%;
+  min-width: 100px;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #b0b0b0;
+  padding: 6px;
+  font-size: 1rem;
+  background: #f8fafd;
+  resize: vertical;
 }
 
 .excel-save-btn {
@@ -86,55 +84,4 @@ input[type="file"]:focus {
 
 .excel-save-btn:hover {
     background: #bbdefb;
-}
-
-// Excel flex container styles
-.excel-flex-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 32px auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-  padding: 32px 24px;
-  overflow-x: scroll;
-}
-
-.excel-flex-header {
-  display: flex;
-  font-weight: 600;
-  background: #e3f2fd;
-  border-radius: 8px 8px 0 0;
-  margin-bottom: 4px;
-}
-
-.excel-flex-col-header {
-  flex: 1;
-  padding: 8px;
-  /*border: 1px solid #b0b0b0;*/
-  text-align: left;
-  background: #e3f2fd;
-  min-width: 120px;
-  box-sizing: border-box;
-}
-
-.excel-flex-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.excel-flex-row {
-  display: flex;
-  margin-bottom: 4px;
-}
-
-.excel-flex-cell {
-  flex: 1;
-  padding: 4px;
-  /*border: 1px solid #b0b0b0;
-  background: #f8fafd;
-  border-radius: 0 0 8px 8px;*/
-  min-width: 120px;
-  box-sizing: border-box;
 }

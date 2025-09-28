@@ -3,18 +3,22 @@
     <div class="left-side">
       <h1 class="druls-header">Druls UI Editor</h1>
       <input type="file" (change)="onFileChange($event)" accept=".xlsx,.xls" />
-      <div *ngIf="excelData.length" class="excel-flex-container">
-        <div class="excel-flex-header">
-          <div *ngFor="let cell of excelData[0]; let colIdx = index" class="excel-flex-col-header">{{ cell }}</div>
-        </div>
-        <div class="excel-flex-body">
-          <div *ngFor="let row of excelData.slice(1); let rowIdx = index; trackBy: trackByRow" class="excel-flex-row">
-            <div *ngFor="let cell of row; let colIdx = index; trackBy: trackByCol" class="excel-flex-cell">
-              <textarea [(ngModel)]="excelData[rowIdx + 1][colIdx]"
-                class="excel-cell-textarea" rows="2" [ngModelOptions]="{standalone: true}" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
-            </div>
-          </div>
-        </div>
+      <div *ngIf="excelData.length" class="excel-table-container">
+        <table class="excel-table">
+          <thead>
+            <tr>
+              <th *ngFor="let cell of excelData[0]; let colIdx = index">{{ cell }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of excelData.slice(1); let rowIdx = index; trackBy: trackByRow">
+              <td *ngFor="let cell of row; let colIdx = index; trackBy: trackByCol">
+                <textarea [(ngModel)]="excelData[rowIdx + 1][colIdx]"
+                  class="excel-cell-textarea" rows="2" [ngModelOptions]="{standalone: true}" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <button class="excel-save-btn" (click)="saveExcel()">💾 Save as Excel</button>
       </div>
     </div>
