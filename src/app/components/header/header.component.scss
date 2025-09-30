@@ -1,0 +1,38 @@
+body, html {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.app-header {
+  width: auto;
+  background: #1976d2;
+  color: #fff;
+  padding: 18px 32px 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+.header-nav {
+  display: flex;
+  gap: 24px;
+}
+.header-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.header-nav a.active-link, .header-nav a:hover {
+  background: #1565c0;
+}
