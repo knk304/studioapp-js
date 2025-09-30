@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { DrulsUiComponent } from './druls-ui.component';
+import { DrulsUiComponent } from './components/druls-ui/druls-ui.component';
 
 export const routes: Routes = [
 	{ path: 'druls-ui', component: DrulsUiComponent },

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DrulsUiComponent } from './druls-ui.component';
+import { DrulsUiComponent } from './components/druls-ui/druls-ui.component';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]

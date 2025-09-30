@@ -27,7 +27,6 @@ input[type="file"]:focus {
     outline: none;
 }
 
-// Excel table container
 .excel-table-container {
   background: #fff;
   border-radius: 12px;
@@ -69,24 +68,6 @@ input[type="file"]:focus {
   resize: vertical;
 }
 
-.excel-save-btn {
-    background: #e3f2fd;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    color: #1976d2;
-    font-weight: 500;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-    transition: background 0.2s;
-    margin-top: 4px;
-}
-
-.excel-save-btn:hover {
-    background: #bbdefb;
-}
-
 .excel-edit-btn {
   background: #fff3e0;
   border: none;
@@ -99,7 +80,10 @@ input[type="file"]:focus {
   margin-top: 4px;
   transition: background 0.2s;
 }
-
 .excel-edit-btn:hover {
   background: #ffe0b2;
+}
+
+.excel-save-btn {
+  margin-top: 4px;
 }
