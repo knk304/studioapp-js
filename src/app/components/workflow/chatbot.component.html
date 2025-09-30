@@ -1,7 +1,11 @@
 <div class="chatbot-container">
   <h3>Chatbot</h3>
   <div class="chatbot-messages">
-    <div *ngFor="let msg of messages" class="chatbot-message">{{ msg }}</div>
+    <div *ngFor="let msg of chatHistory"
+         class="chatbot-message"
+         [ngClass]="{'sent': msg.send, 'received': msg.received}">
+      {{ msg.send || msg.received }}
+    </div>
   </div>
   <div class="chatbot-input-row">
     <textarea [(ngModel)]="userInput" class="chatbot-input" placeholder="Type a message..." rows="2"></textarea>
