@@ -6,6 +6,15 @@ import { NewTemplateComponent } from './components/new-template/new-template.com
 export const routes: Routes = [
 	{ path: 'druls-ui', component: DrulsUiComponent },
 	{ path: 'workflow', component: WorkflowComponent },
-	{ path: 'new-template', component: NewTemplateComponent },
+	{
+	  path: 'new-template',
+	  component: NewTemplateComponent,
+	  children: [
+	    { path: 'page-one', loadComponent: () => import('./components/new-template/pages/page-one.component').then(m => m.PageOneComponent) },
+	    { path: 'page-two', loadComponent: () => import('./components/new-template/pages/page-two.component').then(m => m.PageTwoComponent) },
+	    { path: 'page-three', loadComponent: () => import('./components/new-template/pages/page-three.component').then(m => m.PageThreeComponent) },
+	    { path: '', redirectTo: 'page-one', pathMatch: 'full' }
+	  ]
+	},
 	{ path: '', redirectTo: 'druls-ui', pathMatch: 'full' }
 ];

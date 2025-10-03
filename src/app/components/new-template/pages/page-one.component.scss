@@ -1,0 +1,21 @@
+.page-content {
+  padding: 32px;
+}
+
+.open-tab-btn {
+  margin-top: 24px;
+  padding: 10px 24px;
+  border-radius: 24px;
+  background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+  transition: background 0.2s;
+}
+
+.open-tab-btn:hover {
+  background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+}

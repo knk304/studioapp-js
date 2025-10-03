@@ -1,0 +1,16 @@
+
+<nav class="nav-tabs redesigned">
+  <ng-container *ngFor="let tab of tabs">
+    <div class="tab-item" [ngClass]="{active: activeRoute === tab.route}">
+      <a [routerLink]="['/new-template', tab.route]" tabindex="0" [attr.aria-current]="activeRoute === tab.route ? 'page' : null">
+        {{ tab.label }}
+      </a>
+      <button *ngIf="tab.closable" class="close-btn" (click)="closeTab(tab, $event)" aria-label="Close tab">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </ng-container>
+  <button class="add-tab-btn" title="Add Tab" disabled>
+    <span>+</span>
+  </button>
+</nav>
