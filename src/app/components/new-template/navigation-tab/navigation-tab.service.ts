@@ -1,11 +1,14 @@
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface NavTab {
   label: string;
   route: string;
   closable?: boolean;
 }
+
 
 @Injectable({ providedIn: 'root' })
 export class NavigationTabService {
@@ -16,21 +19,28 @@ export class NavigationTabService {
   };
 
   private tabsSubject = new BehaviorSubject<NavTab[]>([
-    this.tabConfig['page-one']
+    { label: 'Page One', route: 'page-one' }
   ]);
   tabs$ = this.tabsSubject.asObservable();
+
+  constructor(private router: Router) {}
 
   getTabConfig(route: string): NavTab | undefined {
     return this.tabConfig[route];
   }
 
-  addTab(route: string) {
-    const tab = this.tabConfig[route];
-    if (!tab) return;
+  /**
+   * Add a tab and navigate to it. Accepts a NavTab request object.
+   * If the tab already exists, just navigates to it.
+   */
+  addTab(request: NavTab) {
     const tabs = this.tabsSubject.value;
-    if (!tabs.find(t => t.route === route)) {
-      this.tabsSubject.next([...tabs, tab]);
+    const exists = tabs.find(t => t.route === request.route);
+    if (!exists) {
+      this.tabsSubject.next([...tabs, request]);
     }
+    // Always navigate to the tab's route
+    this.router.navigate(['/new-template', request.route]);
   }
 
   removeTab(route: string) {

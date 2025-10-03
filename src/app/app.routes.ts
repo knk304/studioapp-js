@@ -12,8 +12,7 @@ export const routes: Routes = [
 	  children: [
 	    { path: 'page-one', loadComponent: () => import('./components/new-template/pages/page-one.component').then(m => m.PageOneComponent) },
 	    { path: 'page-two', loadComponent: () => import('./components/new-template/pages/page-two.component').then(m => m.PageTwoComponent) },
-	    { path: 'page-three', loadComponent: () => import('./components/new-template/pages/page-three.component').then(m => m.PageThreeComponent) },
-	    { path: '', redirectTo: 'page-one', pathMatch: 'full' }
+	    { path: 'page-three', loadComponent: () => import('./components/new-template/pages/page-three.component').then(m => m.PageThreeComponent) }
 	  ]
 	},
 	{ path: '', redirectTo: 'druls-ui', pathMatch: 'full' }

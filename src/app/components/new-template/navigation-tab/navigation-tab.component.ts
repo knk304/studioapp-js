@@ -35,14 +35,20 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
     const match = url.match(/new-template\/([^\/?#]+)/);
     const initialRoute = (match && match[1]) ? match[1] : 'page-one';
     this.activeRoute = initialRoute;
-    this.tabService.addTab(initialRoute);
+    const tab = this.tabService.getTabConfig(initialRoute);
+    if (tab) {
+      this.tabService.addTab(tab);
+    }
 
     // Listen for route changes, including initial navigation
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const match = event.urlAfterRedirects.match(/new-template\/([^\/?#]+)/);
         this.activeRoute = (match && match[1]) ? match[1] : 'page-one';
-        this.tabService.addTab(this.activeRoute);
+        const tab = this.tabService.getTabConfig(this.activeRoute);
+        if (tab) {
+          this.tabService.addTab(tab);
+        }
       }
     });
     // Listen for openPageTwoTab event
@@ -51,7 +57,10 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
 
 
   openPageTwoTab = () => {
-    this.tabService.addTab('page-two');
+    const tab = this.tabService.getTabConfig('page-two');
+    if (tab) {
+      this.tabService.addTab(tab);
+    }
   };
 
 
