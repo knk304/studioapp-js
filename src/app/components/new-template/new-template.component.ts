@@ -22,7 +22,7 @@ export class NewTemplateComponent {
   }
 
   openPageOneTab() {
-    const pageOneTab: NavTab = { label: 'Page One', route: 'page-one' };
+    const pageOneTab: NavTab = { label: 'Page One', route: 'page-one', basePath: '/new-template' };
     this.tabService.addTab(pageOneTab);
   }
 }

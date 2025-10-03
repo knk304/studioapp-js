@@ -24,6 +24,6 @@ export class PageTwoComponent {
     }
 
     openPageThree() {
-        this.tabService.addTab({ label: 'Page Three', route: 'page-three', closable: true });
+        this.tabService.addTab({ label: 'Page Three', route: 'page-three', closable: true, basePath: '/new-template' });
     }
 }

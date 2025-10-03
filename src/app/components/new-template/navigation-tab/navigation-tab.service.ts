@@ -7,6 +7,7 @@ export interface NavTab {
   label: string;
   route: string;
   closable?: boolean;
+  basePath?: string; // e.g., '/new-template'
 }
 
 
@@ -30,8 +31,9 @@ export class NavigationTabService {
     if (!exists) {
       this.tabsSubject.next([...tabs, request]);
     }
-    // Always navigate to the tab's route
-    this.router.navigate(['/new-template', request.route]);
+    // Always navigate to the tab's route using basePath if provided
+    const base = request.basePath || '/new-template';
+    this.router.navigate([base, request.route]);
   }
 
   removeTab(route: string) {

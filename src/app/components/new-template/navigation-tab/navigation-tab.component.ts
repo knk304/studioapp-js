@@ -36,14 +36,14 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
     const initialRoute = (match && match[1]) ? match[1] : 'page-one';
     this.activeRoute = initialRoute;
     // Always add the tab using a request object
-  this.tabService.addTab({ label: capitalize(initialRoute.replace('-', ' ')), route: initialRoute, closable: initialRoute !== 'page-one' });
+  this.tabService.addTab({ label: capitalize(initialRoute.replace('-', ' ')), route: initialRoute, closable: initialRoute !== 'page-one', basePath: '/new-template' });
 
     // Listen for route changes, including initial navigation
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const match = event.urlAfterRedirects.match(/new-template\/([^\/?#]+)/);
         this.activeRoute = (match && match[1]) ? match[1] : 'page-one';
-  this.tabService.addTab({ label: capitalize(this.activeRoute.replace('-', ' ')), route: this.activeRoute, closable: this.activeRoute !== 'page-one' });
+  this.tabService.addTab({ label: capitalize(this.activeRoute.replace('-', ' ')), route: this.activeRoute, closable: this.activeRoute !== 'page-one', basePath: '/new-template' });
       }
     });
     // Listen for openPageTwoTab event
@@ -52,7 +52,7 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
 
 
   openPageTwoTab = () => {
-  this.tabService.addTab({ label: 'Page Two', route: 'page-two', closable: true });
+  this.tabService.addTab({ label: 'Page Two', route: 'page-two', closable: true, basePath: '/new-template' });
 
 
   };
@@ -64,9 +64,10 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
     this.tabService.removeTab(tab.route);
     if (wasActive) {
       // If the closed tab was active, switch to the last tab or default
-      const tabs = this.tabService.getTabs();
-      const nextTab = tabs.length ? tabs[tabs.length - 1] : { route: 'page-one' };
-      this.router.navigate(['/new-template', nextTab.route]);
+  const tabs = this.tabService.getTabs();
+  const nextTab = tabs.length ? tabs[tabs.length - 1] : { route: 'page-one', basePath: '/new-template' };
+  const base = nextTab.basePath || '/new-template';
+  this.router.navigate([base, nextTab.route]);
     }
   }
 
