@@ -12,11 +12,6 @@ export interface NavTab {
 
 @Injectable({ providedIn: 'root' })
 export class NavigationTabService {
-  private tabConfig: Record<string, NavTab> = {
-    'page-one': { label: 'Page One', route: 'page-one' },
-    'page-two': { label: 'Page Two', route: 'page-two', closable: true },
-    'page-three': { label: 'Page Three', route: 'page-three', closable: true }
-  };
 
   private tabsSubject = new BehaviorSubject<NavTab[]>([
     { label: 'Page One', route: 'page-one' }
@@ -24,10 +19,6 @@ export class NavigationTabService {
   tabs$ = this.tabsSubject.asObservable();
 
   constructor(private router: Router) {}
-
-  getTabConfig(route: string): NavTab | undefined {
-    return this.tabConfig[route];
-  }
 
   /**
    * Add a tab and navigate to it. Accepts a NavTab request object.

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { NavigationTabService, NavTab } from './navigation-tab/navigation-tab.service';
 import { RouterModule } from '@angular/router';
 
 import { NavigationTabComponent } from './navigation-tab/navigation-tab.component';
@@ -14,7 +15,14 @@ import { NavigationTabComponent } from './navigation-tab/navigation-tab.componen
 export class NewTemplateComponent {
   dropdownOpen = false;
 
+  constructor(private tabService: NavigationTabService) {}
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  openPageOneTab() {
+    const pageOneTab: NavTab = { label: 'Page One', route: 'page-one' };
+    this.tabService.addTab(pageOneTab);
   }
 }

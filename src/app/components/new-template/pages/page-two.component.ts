@@ -23,10 +23,7 @@ export class PageTwoComponent {
         console.log('from NavigationTabComponent', this.router.url);
     }
 
-        openPageThree() {
-            const tab = this.tabService.getTabConfig('page-three');
-            if (tab) {
-                this.tabService.addTab(tab);
-            }
-        }
+    openPageThree() {
+        this.tabService.addTab({ label: 'Page Three', route: 'page-three', closable: true });
+    }
 }

@@ -35,20 +35,15 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
     const match = url.match(/new-template\/([^\/?#]+)/);
     const initialRoute = (match && match[1]) ? match[1] : 'page-one';
     this.activeRoute = initialRoute;
-    const tab = this.tabService.getTabConfig(initialRoute);
-    if (tab) {
-      this.tabService.addTab(tab);
-    }
+    // Always add the tab using a request object
+  this.tabService.addTab({ label: capitalize(initialRoute.replace('-', ' ')), route: initialRoute, closable: initialRoute !== 'page-one' });
 
     // Listen for route changes, including initial navigation
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const match = event.urlAfterRedirects.match(/new-template\/([^\/?#]+)/);
         this.activeRoute = (match && match[1]) ? match[1] : 'page-one';
-        const tab = this.tabService.getTabConfig(this.activeRoute);
-        if (tab) {
-          this.tabService.addTab(tab);
-        }
+  this.tabService.addTab({ label: capitalize(this.activeRoute.replace('-', ' ')), route: this.activeRoute, closable: this.activeRoute !== 'page-one' });
       }
     });
     // Listen for openPageTwoTab event
@@ -57,10 +52,9 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
 
 
   openPageTwoTab = () => {
-    const tab = this.tabService.getTabConfig('page-two');
-    if (tab) {
-      this.tabService.addTab(tab);
-    }
+  this.tabService.addTab({ label: 'Page Two', route: 'page-two', closable: true });
+
+
   };
 
 
@@ -80,4 +74,9 @@ export class NavigationTabComponent implements OnInit, OnDestroy {
     this.routerSub?.unsubscribe();
     window.removeEventListener('openPageTwoTab', this.openPageTwoTab);
   }
+}
+
+// Helper to capitalize first letter of each word
+function capitalize(str: string): string {
+  return str.replace(/\b\w/g, c => c.toUpperCase());
 }
