@@ -28,6 +28,55 @@ export class ChatbotComponent {
     { send: "yes" }
   ];
 
+  // Example YAML structure for workflow with form settings
+  workflowYaml = `
+  workflow:
+    name: Account Opening Workflow
+    description: Help customers open their account
+    stages:
+      - name: Customer Intake Form
+        questions:
+          - label: First Name and Last Name
+            type: text
+            required: true
+          - label: Date Of Birth
+            type: date
+            required: true
+          - label: Address
+            type: textarea
+            required: true
+          - label: Income details
+            type: number
+            required: false
+          - label: SSN
+            type: password
+            required: true
+      - name: Checker
+        description: Agent reviews input questionnaire, validates attached and physical documents, and sends request to internal Citi System to create a new account
+        checklist:
+          - label: Validate Customer Input
+            type: checkbox
+            required: true
+          - label: Validate the attached documents
+            type: checkbox
+            required: true
+          - label: Validate the physical documents
+            type: checkbox
+            required: true
+          - label: Option to edit customer questionnaire if needed
+            type: checkbox
+            required: false
+      - name: Closure
+        description: Response from Citi internal system with account details and option to generate Welcome Letter
+        outputs:
+          - Account Number
+          - Routing Number
+          - Customer Name
+          - SSN
+          - One time login password
+          - Welcome Letter (generated on button click)
+  `;
+
   sendMessage() {
     if (this.userInput.trim()) {
       this.messages.push(this.userInput);
