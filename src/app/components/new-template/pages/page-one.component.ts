@@ -1,25 +1,29 @@
+
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { NavigationTabService } from '../navigation-tab/navigation-tab.service';
 
 @Component({
   selector: 'app-page-one',
   standalone: true,
   template: `
-    <div class="page-content">
-      <h3>Page One</h3>
-      <p>This is the first page.</p>
-      <button class="open-tab-btn" (click)="openPageTwo()">Open Page Two</button>
+    <div class="page-content redesigned">
+      <div class="page-header">
+        <h2>🚀 Page One</h2>
+        <span class="page-desc">Welcome to the first page of your workflow.</span>
+      </div>
+      <div class="page-actions">
+        <button class="open-tab-btn" (click)="openPageTwo()">
+          <span class="icon">➕</span> Open Page Two
+        </button>
+      </div>
     </div>
   `,
   styleUrls: ['./page-one.component.scss']
 })
 export class PageOneComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {
-    console.log('from NavigationTabComponent', this.router.url);
-  }
+  constructor(private tabService: NavigationTabService) {}
+
   openPageTwo() {
-    // Use a shared service or event to notify nav-tabs to add Page Two
-    window.dispatchEvent(new CustomEvent('openPageTwoTab'));
-    this.router.navigate(['../page-two'], { relativeTo: this.route });
+    this.tabService.addTab({ label: 'Page Two', route: 'page-two', closable: true, basePath: '/new-template' });
   }
 }

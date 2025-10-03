@@ -3,81 +3,96 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { NavigationTabService, NavTab } from './navigation-tab.service';
+
+import { NavigationTabService, NavTab, capitalize } from './navigation-tab.service';
+
+const BASE_PATH = '/new-template';
 
 @Component({
-  selector: 'app-navigation-tab',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './navigation-tab.component.html',
-  styleUrls: ['./navigation-tab.component.scss']
+    selector: 'app-navigation-tab',
+    standalone: true,
+    imports: [CommonModule, RouterModule],
+    templateUrl: './navigation-tab.component.html',
+    styleUrls: ['./navigation-tab.component.scss']
 })
 export class NavigationTabComponent implements OnInit, OnDestroy {
 
-  tabs: NavTab[] = [];
-  activeRoute = 'page-one';
-  private routerSub?: Subscription;
+    tabs: NavTab[] = [];
+    activeRoute = 'page-one';
+    private routerSub?: Subscription;
 
-  constructor(
-    private router: Router,
-    private tabService: NavigationTabService
-  ) {}
-
-
-  ngOnInit() {
-    // Subscribe to tab state
-    this.tabService.tabs$.subscribe(tabs => {
-      this.tabs = tabs;
-    });
-
-    // On initial load, check the current route ONCE
-    const url = this.router.url;
-    const match = url.match(/new-template\/([^\/?#]+)/);
-    const initialRoute = (match && match[1]) ? match[1] : 'page-one';
-    this.activeRoute = initialRoute;
-    // Always add the tab using a request object
-  this.tabService.addTab({ label: capitalize(initialRoute.replace('-', ' ')), route: initialRoute, closable: initialRoute !== 'page-one', basePath: '/new-template' });
-
-    // Listen for route changes, including initial navigation
-    this.routerSub = this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const match = event.urlAfterRedirects.match(/new-template\/([^\/?#]+)/);
-        this.activeRoute = (match && match[1]) ? match[1] : 'page-one';
-  this.tabService.addTab({ label: capitalize(this.activeRoute.replace('-', ' ')), route: this.activeRoute, closable: this.activeRoute !== 'page-one', basePath: '/new-template' });
-      }
-    });
-    // Listen for openPageTwoTab event
-    window.addEventListener('openPageTwoTab', this.openPageTwoTab);
-  }
+    constructor(
+        private router: Router,
+        private tabService: NavigationTabService
+    ) { }
 
 
-  openPageTwoTab = () => {
-  this.tabService.addTab({ label: 'Page Two', route: 'page-two', closable: true, basePath: '/new-template' });
+    ngOnInit() {
+        // Subscribe to tab state
+        this.tabService.tabs$.subscribe(tabs => {
+            this.tabs = tabs;
+        });
 
+        // Set initial active route and ensure tab exists
+        this.setActiveRouteFromUrl(this.router.url);
 
-  };
-
-
-  closeTab(tab: NavTab, event: MouseEvent) {
-    event.stopPropagation();
-    const wasActive = this.activeRoute === tab.route;
-    this.tabService.removeTab(tab.route);
-    if (wasActive) {
-      // If the closed tab was active, switch to the last tab or default
-  const tabs = this.tabService.getTabs();
-  const nextTab = tabs.length ? tabs[tabs.length - 1] : { route: 'page-one', basePath: '/new-template' };
-  const base = nextTab.basePath || '/new-template';
-  this.router.navigate([base, nextTab.route]);
+        // Listen for route changes
+        this.routerSub = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.setActiveRouteFromUrl(event.urlAfterRedirects);
+            }
+        });
     }
-  }
 
-  ngOnDestroy() {
-    this.routerSub?.unsubscribe();
-    window.removeEventListener('openPageTwoTab', this.openPageTwoTab);
-  }
+    private setActiveRouteFromUrl(url: string) {
+        // Use BASE_PATH constant for matching
+        const escapedBase = BASE_PATH.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const match = url.match(new RegExp(`${escapedBase}/([^/?#]+)`));
+        const route = (match && match[1]) ? match[1] : 'page-one';
+        this.activeRoute = route;
+        if (route === 'not-found') {
+            this.tabService.addTab({
+                label: 'Not Found',
+                route: 'not-found',
+                closable: true,
+                basePath: BASE_PATH
+            });
+        } else {
+            this.tabService.addTab({
+                label: capitalize(route.replace('-', ' ')),
+                route,
+                closable: route !== 'page-one',
+                basePath: BASE_PATH
+            });
+        }
+    }
+
+
+
+    /**
+     * Open a tab by request object. Can be called from parent or other components.
+     */
+    openTab(tab: NavTab) {
+    this.tabService.addTab({ ...tab, basePath: BASE_PATH });
+    }
+
+
+    closeTab(tab: NavTab, event: MouseEvent) {
+        event.stopPropagation();
+        const wasActive = this.activeRoute === tab.route;
+        this.tabService.removeTab(tab.route);
+        if (wasActive) {
+            // If the closed tab was active, switch to the last tab or default
+            const tabs = this.tabService.getTabs();
+            const nextTab = tabs.length ? tabs[tabs.length - 1] : { route: 'page-one', basePath: BASE_PATH };
+            const base = nextTab.basePath || BASE_PATH;
+            this.router.navigate([base, nextTab.route]);
+        }
+    }
+
+    ngOnDestroy() {
+        this.routerSub?.unsubscribe();
+    }
 }
 
-// Helper to capitalize first letter of each word
-function capitalize(str: string): string {
-  return str.replace(/\b\w/g, c => c.toUpperCase());
-}
+

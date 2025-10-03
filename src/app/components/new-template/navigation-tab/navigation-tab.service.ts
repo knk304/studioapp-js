@@ -1,3 +1,7 @@
+// Helper to capitalize first letter of each word
+export function capitalize(str: string): string {
+  return str.replace(/\b\w/g, c => c.toUpperCase());
+}
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
