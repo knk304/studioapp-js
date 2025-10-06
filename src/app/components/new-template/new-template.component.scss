@@ -7,13 +7,25 @@
 
 .new-template-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 32px 12px 32px;
+  flex-direction: column;
+  padding: 18px 32px 0 32px;
   background: rgba(25, 118, 210, 0.85);
   border-radius: 0 0 18px 18px;
   box-shadow: 0 4px 24px rgba(25, 118, 210, 0.1);
   margin-bottom: 24px;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-bottom {
+  width: 100%;
+  margin-top: 8px;
+  display: block;
 }
 
 .header-left {
