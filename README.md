@@ -57,3 +57,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Database Setup
+
+This application uses MongoDB. See **[INSTALL_MONGODB.md](./INSTALL_MONGODB.md)** for step-by-step instructions on installing MongoDB locally on Windows, macOS, and Linux.
